@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-glfw.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-glfw-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-glfw-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-opengl.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-opengl-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-opengl-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
