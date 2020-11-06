@@ -8,14 +8,21 @@ package window;
  *
  */
 public class Main {
-
+	
 	public static void main(String[] args) {
+		WindowManager windowManager;
+		
 		try {
-			new WindowManager();
+			windowManager = new WindowManager();
+			
+			windowManager.endWindowManager();
 		} catch (GLFWFailedInitializeException e) {
 			e.printStackTrace();
 			System.err.println("Failed to initialize GLFW.");
+		} catch (GLFWFailedWindowCreationException e) {
+			e.printStackTrace();
+			System.err.println(
+					"Failed to create GLFW window or window context.");
 		}
 	}
-
 }

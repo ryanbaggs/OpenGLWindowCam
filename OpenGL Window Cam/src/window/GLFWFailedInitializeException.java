@@ -10,9 +10,6 @@ package window;
  */
 public class GLFWFailedInitializeException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7101468651502248654L;
 
 	public GLFWFailedInitializeException() {
