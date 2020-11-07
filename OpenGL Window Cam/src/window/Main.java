@@ -5,17 +5,13 @@ package window;
  * <p>
  * @author Ryan Baggs
  * @date Created on 05-Nov-2020
- *
  */
 public class Main {
 	
 	public static void main(String[] args) {
-		WindowManager windowManager;
 		
 		try {
-			windowManager = new WindowManager();
-			
-			windowManager.endWindowManager();
+			new WindowManager();
 		} catch (GLFWFailedInitializeException e) {
 			e.printStackTrace();
 			System.err.println("Failed to initialize GLFW.");
