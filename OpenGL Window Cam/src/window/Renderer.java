@@ -1,5 +1,6 @@
 package window;
 
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL43;
 
 /**
@@ -45,6 +46,10 @@ class Renderer {
 			"}";
 	
 	Renderer(){
+		// Must create capabilities before utilizing OpenGL. Makes the 
+		// OpenGL bindings available for use.
+		GL.createCapabilities();
+		
 		createVBO();
 		createVAO();
 		createShaders();

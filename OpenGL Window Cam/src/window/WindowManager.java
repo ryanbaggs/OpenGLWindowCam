@@ -3,6 +3,7 @@ package window;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallbackI;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
+import org.lwjgl.opengl.GL;
 
 /**
  * Manages GLFW, window, and the OpenGL context for the window.
@@ -51,6 +52,11 @@ public class WindowManager {
 			// GLFW not successfully initialized, throw new exception.
 			throw new GLFWFailedInitializeException();
 		}
+		
+		GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
+		GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 4);
+		GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 3);
+		GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_ANY_PROFILE);
 	}
 	
 	/**
@@ -81,6 +87,9 @@ public class WindowManager {
 		// Set the frame swap interval.
 		GLFW.glfwSwapInterval(SWAP_INTERVAL);
 		
+		// Set the window to visible.
+		GLFW.glfwShowWindow(windowHandle);
+		
 		return windowHandle;
 	}
 	
@@ -108,6 +117,7 @@ public class WindowManager {
 	 * @param window to update.
 	 */
 	private void updateWindow(long window) {
+		
 		// Check if the close flag is set to true.
 		while(!GLFW.glfwWindowShouldClose(window)) {
 			// Update the renderer to draw current info.
