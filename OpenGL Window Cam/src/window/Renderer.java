@@ -14,6 +14,12 @@ class Renderer {
 	int vbo;
 	// Vertex Array Object.
 	int vao;
+	// Vertex Shader.
+	int vs;
+	// Fragment Shader.
+	int fs;
+	// Shader Program.
+	int sp;
 	
 	// The vertices of the triangle.
 	private float[] points = {
@@ -22,8 +28,26 @@ class Renderer {
 		-0.5f, -0.5f,  0.0f
 	};
 	
+	// Vertex Shader code.
+	private CharSequence vertexShaderCode = 
+			"#version 430\n" + 
+			"in vec3 point;" + 
+			"void main() {" + 
+			"    gl_Position = vec4(point, 1.0);" + 
+			"}";
+	
+	// Fragment Shader code.
+	private CharSequence fragmentShaderCode = 
+			"#version 430\n" + 
+			"out vec4 frag_color;" + 
+			"void main() {" + 
+			"    frag_color = vec4(1.0, 0.0, 0.0, 1.0);" + 
+			"}";
+	
 	Renderer(){
 		createVBO();
+		createVAO();
+		createShaders();
 	}
 	
 	/**
@@ -76,8 +100,64 @@ class Renderer {
 		GL43.glVertexAttribPointer(0, 3, GL43.GL_FLOAT, false, 0, 0L);
 	}
 	
-	void update() {
+	/**
+	 * Creates the shaders and the shader program to use for drawing meshes 
+	 * to the window.
+	 */
+	void createShaders() {
+		vs = compileShader(GL43.GL_VERTEX_SHADER, vertexShaderCode);
+		fs = compileShader(GL43.GL_FRAGMENT_SHADER, fragmentShaderCode);
+		linkProgram();
+	}
+	
+	/**
+	 * Creates a shader of the specified type, sets the specified code to the 
+	 * shader source code, and compiles the provided code.
+	 * 
+	 * @param shaderType The type of shader (vertex, fragment, etc...)
+	 * @param shaderCode to be used as the shader's source code.
+	 * @return the compiled shader's name.
+	 */
+	private int compileShader( int shaderType, CharSequence shaderCode) {
+		// Create the shader, set the name value.
+		int shader = GL43.glCreateShader(shaderType);
 		
+		// Set the shader source code with the shader code for the specified 
+		// shader.
+		GL43.glShaderSource(shader, shaderCode);
+		
+		// Compile the code.
+		GL43.glCompileShader(shader);
+		
+		// Return the compiled shader name.
+		return shader;
+	}
+	
+	/**
+	 * Creates a shader program, attaches the shaders to it and links the 
+	 * shaders together into a single program.
+	 */
+	private void linkProgram() {
+		// Create the shader program, set the name value.
+		sp = GL43.glCreateProgram();
+		
+		// Attach the vertex and fragment shaders to the shader program.
+		GL43.glAttachShader(sp, vs);
+		GL43.glAttachShader(sp, fs);
+		
+		// Link the shaders together into single program.
+		GL43.glLinkProgram(sp);
+	}
+	
+	void update() {
+		// Clear the window.
+		GL43.glClear(GL43.GL_COLOR_BUFFER_BIT | GL43.GL_DEPTH_BUFFER_BIT);
+		
+		GL43.glUseProgram(sp);
+		
+		GL43.glBindVertexArray(vao);
+		
+		GL43.glDrawArrays(GL43.GL_TRIANGLES, 0, 3);
 	}
 	
 }
