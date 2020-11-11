@@ -3,7 +3,6 @@ package window;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallbackI;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
-import org.lwjgl.opengl.GL;
 
 /**
  * Manages GLFW, window, and the OpenGL context for the window.
@@ -14,6 +13,8 @@ import org.lwjgl.opengl.GL;
 public class WindowManager {
 	
 	private Renderer renderer;
+	
+	private static boolean upFlag = false;
 	
 	private static final long NULL = 0;
 	
@@ -137,6 +138,7 @@ public class WindowManager {
 	 */
 	private void updateRenderer() {
 		renderer.update();
+		renderer.setFlag(upFlag);
 	}
 	
 	/**
@@ -194,10 +196,33 @@ public class WindowManager {
 		@Override
 		public void invoke(long window, int key, int scancode, int action, 
 				int mods) {
-			// If the escape key is pressed, close the window.
-			if(key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_PRESS) {
-				GLFW.glfwSetWindowShouldClose(window, true);
+			
+			switch(key) {
+				case GLFW.GLFW_KEY_ESCAPE:
+					if(action == GLFW.GLFW_PRESS) {
+						// If the escape key is pressed, close the window.
+						GLFW.glfwSetWindowShouldClose(window, true);
+					}
+					break;
+				case GLFW.GLFW_KEY_W:
+					upFlag = keyAction(action);
+					break;
 			}
+		}
+		
+		/**
+		 * Returns true if the key is pressed or held down, or false if the 
+		 * key is released.
+		 * 
+		 * @param action of the key.
+		 * @return a boolean indicating if the key is pressed or not.
+		 */
+		private boolean keyAction(int action) {
+			if(action == GLFW.GLFW_RELEASE) {
+				return false;
+			}
+			// Pressed or holding down key.
+			return true;
 		}
 	}
 }
