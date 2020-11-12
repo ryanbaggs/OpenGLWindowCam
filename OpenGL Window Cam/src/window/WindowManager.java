@@ -14,7 +14,11 @@ public class WindowManager {
 	
 	private Renderer renderer;
 	
+	// Triangle movement flags.
 	private static boolean upFlag = false;
+	private static boolean downFlag = false;
+	private static boolean rightFlag = false;
+	private static boolean leftFlag = false;
 	
 	private static final long NULL = 0;
 	
@@ -138,7 +142,10 @@ public class WindowManager {
 	 */
 	private void updateRenderer() {
 		renderer.update();
-		renderer.setFlag(upFlag);
+		renderer.setUpFlag(upFlag);
+		renderer.setDownFlag(downFlag);
+		renderer.setRightFlag(rightFlag);
+		renderer.setLeftFlag(leftFlag);
 	}
 	
 	/**
@@ -185,7 +192,7 @@ public class WindowManager {
 
 		/**
 		 * Gets called when key input is pressed, repeated, or released and 
-		 * provides information on the input.
+		 * provides information on the input to the keyHandler method.
 		 * 
 		 * @param windowHandle of the window that received the input.
 		 * @param key that was pressed.
@@ -196,17 +203,35 @@ public class WindowManager {
 		@Override
 		public void invoke(long window, int key, int scancode, int action, 
 				int mods) {
-			
+			keyHandler(window, key, action);
+		}
+		
+		/**
+		 * Determines what is done when key is pressed/released.
+		 * 
+		 * @param key being pressed, held, or released.
+		 * @param action being performed on the key.
+		 */
+		private void keyHandler(long window, int key, int action) {
 			switch(key) {
-				case GLFW.GLFW_KEY_ESCAPE:
-					if(action == GLFW.GLFW_PRESS) {
-						// If the escape key is pressed, close the window.
-						GLFW.glfwSetWindowShouldClose(window, true);
-					}
-					break;
-				case GLFW.GLFW_KEY_W:
-					upFlag = keyAction(action);
-					break;
+			case GLFW.GLFW_KEY_ESCAPE:
+				if(action == GLFW.GLFW_PRESS) {
+					// If the escape key is pressed, close the window.
+					GLFW.glfwSetWindowShouldClose(window, true);
+				}
+				break;
+			case GLFW.GLFW_KEY_W:
+				upFlag = keyAction(action);
+				break;
+			case GLFW.GLFW_KEY_S:
+				downFlag = keyAction(action);
+				break;
+			case GLFW.GLFW_KEY_D:
+				rightFlag = keyAction(action);
+				break;
+			case GLFW.GLFW_KEY_A:
+				leftFlag  = keyAction(action);
+				break;
 			}
 		}
 		

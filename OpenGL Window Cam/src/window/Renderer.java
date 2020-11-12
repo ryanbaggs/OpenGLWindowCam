@@ -1,5 +1,7 @@
 package window;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL43;
 
@@ -14,6 +16,7 @@ import entity.Triangle;
 class Renderer {
 	
 	private Triangle triangle;
+	private ArrayList<Triangle> triangles;
 	
 	// Vertex Buffer Object.
 	int vbo;
@@ -57,10 +60,11 @@ class Renderer {
 	
 	/**
 	 * Creates an "entity" in this case a triangle for use in rendering an 
-	 * object in the window.
+	 * object in the window. Instantiates the triangles ArrayList.
 	 */
 	private void createEntity() {
 		triangle = new Triangle();
+		triangles = new ArrayList<Triangle>();
 	}
 	
 	/**
@@ -163,14 +167,20 @@ class Renderer {
 	}
 	
 	/**
-	 * Updates what is rendered in the window. First clears the window with 
-	 * the buffer bit color, then lets OpenGL know to use the program created, 
-	 * then binds the vertex array, and draws the arrays in the vertex array.
+	 * Updates what is rendered in the window. This would be taken care of by 
+	 * another thread and class to do separate updates from the rendering.
 	 */
 	void update() {
 		triangle.update();
 		updateVBO();
-		
+	}
+	
+	/**
+	 * First clears the window with the buffer bit color, then lets OpenGL 
+	 * know to use the program created, then binds the vertex array, and draws 
+	 * the arrays in the vertex array.
+	 */
+	void draw() {
 		// Clear the window.
 		GL43.glClear(GL43.GL_COLOR_BUFFER_BIT | GL43.GL_DEPTH_BUFFER_BIT);
 		
@@ -181,6 +191,9 @@ class Renderer {
 		GL43.glDrawArrays(GL43.GL_TRIANGLES, 0, 3);
 	}
 	
+	/**
+	 * Binds the VBO and updates it with the new triangle points.
+	 */
 	private void updateVBO() {
 		// Bind the buffer object to the array buffer. This sets the 
 		// "current" buffer, allowing to add the data.
@@ -191,7 +204,25 @@ class Renderer {
 		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, triangle.getPoints(), GL43.GL_DYNAMIC_DRAW);
 	}
 	
-	void setFlag(boolean flag) {
+	/**
+	 * Set the movement flags for the Triangle.
+	 * 
+	 * @param flag value, true means move.
+	 */
+	
+	void setUpFlag(boolean flag) {
 		triangle.setMoveUp(flag);
+	}
+	
+	void setDownFlag(boolean flag) {
+		triangle.setMoveDown(flag);
+	}
+	
+	void setRightFlag(boolean flag) {
+		triangle.setMoveRight(flag);
+	}
+	
+	void setLeftFlag(boolean flag) {
+		triangle.setMoveLeft(flag);
 	}
 }
