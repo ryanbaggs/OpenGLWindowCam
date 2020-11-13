@@ -14,11 +14,12 @@ public class WindowManager {
 	
 	private Renderer renderer;
 	
-	// Triangle movement flags.
+	// Key flags.
 	private static boolean upFlag = false;
 	private static boolean downFlag = false;
 	private static boolean rightFlag = false;
 	private static boolean leftFlag = false;
+	private static boolean addEntityFlag = false;
 	
 	private static final long NULL = 0;
 	
@@ -141,7 +142,8 @@ public class WindowManager {
 	 * Tell the renderer to update.
 	 */
 	private void updateRenderer() {
-		renderer.update();
+		renderer.draw();
+		renderer.update(addEntityFlag);
 		renderer.setUpFlag(upFlag);
 		renderer.setDownFlag(downFlag);
 		renderer.setRightFlag(rightFlag);
@@ -232,6 +234,8 @@ public class WindowManager {
 			case GLFW.GLFW_KEY_A:
 				leftFlag  = keyAction(action);
 				break;
+			case GLFW.GLFW_KEY_1:
+				addEntityFlag = (action == GLFW.GLFW_RELEASE ? true : false);
 			}
 		}
 		

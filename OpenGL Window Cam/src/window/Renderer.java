@@ -15,11 +15,12 @@ import entity.Triangle;
  */
 class Renderer {
 	
-	private Triangle triangle;
-	private ArrayList<Triangle> triangles;
+	private ArrayList<Triangle> triangles = new ArrayList<Triangle>();
 	
-	// Vertex Buffer Object.
-	int vbo;
+	private static final int MAX_TRIANGLES = 10;
+	
+	// Vertex Buffer Objects.
+	int[] vbos = new int[MAX_TRIANGLES];
 	// Vertex Array Object.
 	int vao;
 	// Vertex Shader.
@@ -52,45 +53,48 @@ class Renderer {
 		
 		// Create "entity" to draw to the window.
 		createEntity();
-		
-		createVBO();
-		createVAO();
-		createShaders();
 	}
 	
 	/**
 	 * Creates an "entity" in this case a triangle for use in rendering an 
-	 * object in the window. Instantiates the triangles ArrayList.
+	 * object in the window.
 	 */
-	private void createEntity() {
-		triangle = new Triangle();
-		triangles = new ArrayList<Triangle>();
+	void createEntity() {
+		triangles.add(new Triangle());
+		
+		int i = triangles.size() - 1;
+		
+		createVBO(i);
+		createVAO();
+		addToVAO(vbos[i], i);
+		createShaders();
 	}
 	
 	/**
-	 * Creates a new Vertex Buffer Object (VBO), binds it, and adds data to 
-	 * it. 
+	 * Creates a new Vertex Buffer Object (VBO) at specified index, binds it, 
+	 * and adds data to it.
 	 * 
 	 * The vertex buffer object is what OpenGL uses to hold vertex data, 
 	 * for example, the location or color.
+	 * 
+	 * @param vboIndex of the buffer object to create.
 	 */
-	private void createVBO() {
+	private void createVBO(int vboIndex) {
 		// Get the name of the generated buffer object.
-		vbo = GL43.glGenBuffers();
+		vbos[vboIndex] = GL43.glGenBuffers();
 		
 		// Bind the buffer object to the array buffer. This sets the 
 		// "current" buffer, allowing to add the data.
-		GL43.glBindBuffer(GL43.GL_ARRAY_BUFFER, vbo);
+		GL43.glBindBuffer(GL43.GL_ARRAY_BUFFER, vbos[vboIndex]);
 		
 		// Give the array the data and inform that the data will be set many 
 		// times and will change often.
-		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, triangle.getPoints(), GL43.GL_DYNAMIC_DRAW);
+		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, 
+				triangles.get(vboIndex).getPoints(), GL43.GL_DYNAMIC_DRAW);
 	}
 	
 	/**
-	 * Creates a new Vertex Array Object (VAO), binds it, enables the first 
-	 * element (attribute), binds the VBO, and define the array of vertices 
-	 * (how they will be read as).
+	 * Creates a new Vertex Array Object (VAO) and binds it.
 	 * 
 	 * The VAO keeps track of the VBOs, the array definitions for each, and 
 	 * the attribute (like coordinates, or color) arrays so you don't have to 
@@ -103,9 +107,18 @@ class Renderer {
 		// Bind the VAO, making it the "current" VAO being acted upon. Only 
 		// one per OpenGL context.
 		GL43.glBindVertexArray(vao);
-		
+	}
+	
+	/**
+	 * enables the first element (attribute), binds the VBO, and define the 
+	 * array of vertices (how they will be read as).
+	 * 
+	 * @param vbo to be added to the VAO.
+	 * @param vaoAttribIndex The attribute index to assign the VBO to.
+	 */
+	private void addToVAO(int vbo, int vaoAttribIndex) {
 		// Enable the first attribute array in the VAO for use.
-		GL43.glEnableVertexAttribArray(0);
+		GL43.glEnableVertexAttribArray(vaoAttribIndex);
 		
 		// Bind the VBO making it the "current" VBO.
 		GL43.glBindBuffer(GL43.GL_ARRAY_BUFFER, vbo);
@@ -114,7 +127,7 @@ class Renderer {
 		// bound array buffer to said index. The rest of the parameters are 
 		// info on the array buffer's data. 
 		// Parameters: index, size, type, normalized, stride, pointer (or offset).
-		GL43.glVertexAttribPointer(0, 3, GL43.GL_FLOAT, false, 0, 0L);
+		GL43.glVertexAttribPointer(vaoAttribIndex, 3, GL43.GL_FLOAT, false, 0, 0L);
 	}
 	
 	/**
@@ -135,7 +148,7 @@ class Renderer {
 	 * @param shaderCode to be used as the shader's source code.
 	 * @return the compiled shader's name.
 	 */
-	private int compileShader( int shaderType, CharSequence shaderCode) {
+	private int compileShader(int shaderType, CharSequence shaderCode) {
 		// Create the shader, set the name value.
 		int shader = GL43.glCreateShader(shaderType);
 		
@@ -165,14 +178,23 @@ class Renderer {
 		// Link the shaders together into single program.
 		GL43.glLinkProgram(sp);
 	}
-	
+
 	/**
 	 * Updates what is rendered in the window. This would be taken care of by 
-	 * another thread and class to do separate updates from the rendering.
+	 * another thread and class to do separate updates from the rendering. 
+	 * Adds a new Entity if the flag is set and there are not already max 
+	 * Triangles made.
 	 */
-	void update() {
-		triangle.update();
-		updateVBO();
+	void update(boolean addEntity) {
+		
+		if(addEntity && triangles.size() < MAX_TRIANGLES)
+			createEntity();
+		
+		for(int i = 0; i < triangles.size(); i++) {
+			updateVBO(vbos[i], triangles.get(i));
+			
+			triangles.get(i).update();
+		}
 	}
 	
 	/**
@@ -194,14 +216,15 @@ class Renderer {
 	/**
 	 * Binds the VBO and updates it with the new triangle points.
 	 */
-	private void updateVBO() {
+	private void updateVBO(int vbo, Triangle triangle) {
 		// Bind the buffer object to the array buffer. This sets the 
 		// "current" buffer, allowing to add the data.
 		GL43.glBindBuffer(GL43.GL_ARRAY_BUFFER, vbo);
 		
 		// Give the array the data and inform that the data will be set many 
 		// times and will change often.
-		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, triangle.getPoints(), GL43.GL_DYNAMIC_DRAW);
+		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, 
+				triangle.getPoints(), GL43.GL_DYNAMIC_DRAW);
 	}
 	
 	/**
@@ -211,18 +234,18 @@ class Renderer {
 	 */
 	
 	void setUpFlag(boolean flag) {
-		triangle.setMoveUp(flag);
+		triangles.get(0).setMoveUp(flag);
 	}
 	
 	void setDownFlag(boolean flag) {
-		triangle.setMoveDown(flag);
+		triangles.get(0).setMoveDown(flag);
 	}
 	
 	void setRightFlag(boolean flag) {
-		triangle.setMoveRight(flag);
+		triangles.get(0).setMoveRight(flag);
 	}
 	
 	void setLeftFlag(boolean flag) {
-		triangle.setMoveLeft(flag);
+		triangles.get(0).setMoveLeft(flag);
 	}
 }
