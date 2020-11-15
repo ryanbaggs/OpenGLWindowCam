@@ -151,11 +151,13 @@ public class WindowManager {
 	}
 	
 	/**
-	 * Destroys the window then terminates GLFW.
+	 * Deletes the arrays in the Renderer, destroys the window, then 
+	 * terminates GLFW.
 	 * 
 	 * @param window to destroy.
 	 */
 	private void endWindowManager(long window) {
+		renderer.deleteVertexObjects();
 		GLFW.glfwDestroyWindow(window);
 		GLFW.glfwTerminate();
 	}
