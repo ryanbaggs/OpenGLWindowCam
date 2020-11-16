@@ -10,9 +10,10 @@ import org.lwjgl.opengl.GL43;
  */
 public class Triangle {
 	
-	// Triangle specific VAO and VBO.
+	// Triangle specific VAO, VBO, and Texture.
 	int vao = 0;
 	int vbo = 0;
+	int texture = 0;
 	
 	// Movement flags.
 	private boolean moveUp = false;
@@ -25,6 +26,10 @@ public class Triangle {
 		0.0f,  0.5f,  0.0f,
 		0.5f, -0.5f,  0.0f,
 		-0.5f, -0.5f,  0.0f
+	};
+	
+	private int[] elements = {
+		0, 1, 2	
 	};
 	
 	public Triangle() {
@@ -56,6 +61,14 @@ public class Triangle {
 		// Give the array the data and inform that the data will be set many 
 		// times and will change often.
 		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, points, GL43.GL_DYNAMIC_DRAW);
+	}
+	
+	/**
+	 * Creates the texture vertex info.
+	 */
+	private void createTexture() {
+		// Get the name of the generated Texture.
+		texture = GL43.glGenTextures();
 	}
 	
 	/**
