@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL43;
 
+import entity.Texture;
 import entity.Triangle;
 
 /**
@@ -17,7 +18,12 @@ class Renderer {
 	
 	private ArrayList<Triangle> triangles = new ArrayList<Triangle>();
 	
+	// Constants.
 	private static final int MAX_TRIANGLES = 10;
+	private static final String FILE_NAME = "src/res/bricks_texture.png";
+	
+	// Texture.
+	private Texture texture;
 	
 	// Vertex Shader.
 	int vs;
@@ -47,6 +53,9 @@ class Renderer {
 		// OpenGL bindings available for use.
 		GL.createCapabilities();
 		
+		// Create the texture.
+		createTexture();
+		
 		// Create "entity" to draw to the window.
 		createEntity();
 		
@@ -54,12 +63,16 @@ class Renderer {
 		createShaders();
 	}
 	
+	private void createTexture() {
+		texture = new Texture(FILE_NAME);
+	}
+	
 	/**
 	 * Creates an "entity" in this case a triangle for use in rendering an 
 	 * object in the window.
 	 */
 	void createEntity() {
-		Triangle triangle = new Triangle();	
+		Triangle triangle = new Triangle(texture);	
 		triangles.add(triangle);
 	}
 	

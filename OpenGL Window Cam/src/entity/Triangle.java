@@ -22,22 +22,23 @@ public class Triangle {
 	private boolean moveRight = false;
 	
 	// The vertices of the triangle.
-	private float[] points = {
-		0.0f,  0.5f,  0.0f,
-		0.5f, -0.5f,  0.0f,
-		-0.5f, -0.5f,  0.0f
+	private float[] pointData = {
+	     // Positions	       // Texture coords
+		 0.0f,  0.5f,  0.0f,   0.0f, 0.0f,  // lower-left corner 
+		 0.5f, -0.5f,  0.0f,   1.0f, 0.0f,  // lower-right corner
+		-0.5f, -0.5f,  0.0f,   0.5f, 1.0f   // top-center corner
 	};
 	
-	private int[] elements = {
-		0, 1, 2	
-	};
+	private Texture textureData;
 	
-	public Triangle() {
+	public Triangle(Texture textureData) {
+		this.textureData = textureData;
 		createTriangle();
 	}
 	
 	private void createTriangle(){
 		createVBO();
+		createTexture();
 		createVAO();
 		addDataToVAO();
 		unBind();
@@ -60,15 +61,28 @@ public class Triangle {
 		
 		// Give the array the data and inform that the data will be set many 
 		// times and will change often.
-		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, points, GL43.GL_DYNAMIC_DRAW);
+		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, pointData, GL43.GL_DYNAMIC_DRAW);
 	}
 	
 	/**
 	 * Creates the texture vertex info.
 	 */
 	private void createTexture() {
-		// Get the name of the generated Texture.
+		// Get the name of the generated texture.
 		texture = GL43.glGenTextures();
+		
+		// Bind the texture.
+		GL43.glBindTexture(GL43.GL_TEXTURE_2D, texture);
+		
+		// Check that the data for the texture is not null.
+		if(textureData != null) {
+			GL43.glTexImage2D(GL43.GL_TEXTURE_2D, 0, GL43.GL_RGB, 
+					textureData.getWidth(), textureData.getHeight(), 0, 
+					GL43.GL_RGB, GL43.GL_UNSIGNED_BYTE, 
+					textureData.getTexture());
+		} else {
+			System.err.println("Failed to load texture.");
+		}
 	}
 	
 	/**
@@ -88,10 +102,8 @@ public class Triangle {
 	}
 	
 	/**
-	 * enables the first element (attribute), binds the VBO, and define the 
-	 * array of vertices (how they will be read as).
-	 * 
-	 * @param vbo to be added to the VAO.
+	 * Enables the first element (attribute), binds the VBO, and define the 
+	 * array of vertices (how they will be read as). 
 	 */
 	private void addDataToVAO() {
 		// Enable the first attribute array in the VAO for use.
@@ -104,7 +116,16 @@ public class Triangle {
 		// bound array buffer to said index. The rest of the parameters are 
 		// info on the array buffer's data. 
 		// Parameters: index, size, type, normalized, stride, pointer (or offset).
-		GL43.glVertexAttribPointer(0, 3, GL43.GL_FLOAT, false, 0, 0L);
+		GL43.glVertexAttribPointer(0, 3, GL43.GL_FLOAT, false, (5 * Float.BYTES), 0L);
+		
+		// Enable the second attribute array in the VAO for use.
+		GL43.glEnableVertexAttribArray(1);
+		
+		// Bind the texture.
+		GL43.glBindTexture(GL43.GL_TEXTURE_2D, texture);
+		
+		// Second index, with offset to the texture coords.
+		GL43.glVertexAttribPointer(1, 2, GL43.GL_FLOAT, false, (5 * Float.BYTES), (3 * Float.BYTES));
 	}
 	
 	/**
@@ -128,7 +149,7 @@ public class Triangle {
 		
 		// Give the array the data and inform that the data will be set many 
 		// times and will change often.
-		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, points, GL43.GL_DYNAMIC_DRAW);
+		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, pointData, GL43.GL_DYNAMIC_DRAW);
 	}
 	
 	/**
@@ -156,33 +177,33 @@ public class Triangle {
 	
 	private void checkAndMoveUp() {
 		if(moveUp) {
-			points[1] += 0.02f;
-			points[4] += 0.02f;
-			points[7] += 0.02f;
+			pointData[1] += 0.02f;
+			pointData[4] += 0.02f;
+			pointData[7] += 0.02f;
 		}
 	}
 	
 	private void checkAndMoveDown() {
 		if(moveDown) {
-			points[1] -= 0.02f;
-			points[4] -= 0.02f;
-			points[7] -= 0.02f;
+			pointData[1] -= 0.02f;
+			pointData[4] -= 0.02f;
+			pointData[7] -= 0.02f;
 		}
 	}
 	
 	private void checkAndMoveRight() {
 		if(moveRight) {
-			points[0] += 0.02f;
-			points[3] += 0.02f;
-			points[6] += 0.02f;
+			pointData[0] += 0.02f;
+			pointData[3] += 0.02f;
+			pointData[6] += 0.02f;
 		}
 	}
 	
 	private void checkAndMoveLeft() {
 		if(moveLeft) {
-			points[0] -= 0.02f;
-			points[3] -= 0.02f;
-			points[6] -= 0.02f;
+			pointData[0] -= 0.02f;
+			pointData[3] -= 0.02f;
+			pointData[6] -= 0.02f;
 		}
 	}
 	
@@ -191,11 +212,11 @@ public class Triangle {
 	 */
 	
 	public float[] getPoints() {
-		return points;
+		return pointData;
 	}
 
 	public void setPoints(float[] points) {
-		this.points = points;
+		this.pointData = points;
 	}
 	
 	public int getVao() {
