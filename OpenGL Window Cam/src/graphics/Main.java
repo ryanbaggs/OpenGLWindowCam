@@ -1,4 +1,4 @@
-package window;
+package graphics;
 
 /**
  * Creates a new WindowManager.

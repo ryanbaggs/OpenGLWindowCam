@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.stb.STBImage;
+import org.lwjgl.system.MemoryStack;
 
 /**
  * Texture object that holds data on the image loaded when instantiated.
@@ -28,20 +29,26 @@ public class Texture {
 	 * 
 	 * @param fileName the path and file name of the texture to load.
 	 */
-	public void loadTexture(String fileName){
-		// Create the file name as a ByteBuffer.
-		ByteBuffer file = ByteBuffer.wrap(fileName.getBytes());
+	public void loadTexture(String fileName) {
 		
-		// Create ByteBuffers to get data.
-		IntBuffer x = IntBuffer.allocate(1 * Integer.BYTES);
-		IntBuffer y = IntBuffer.allocate(1 * Integer.BYTES);
-		IntBuffer channels = IntBuffer.allocate(1 * Integer.BYTES);
-		
-		// Get the texture data.
-		texture = STBImage.stbi_load(file, x, y, channels, 0);
-		width = x.get();
-		height = y.get();
-		numberOfChannels = channels.get();
+		try(MemoryStack stack = MemoryStack.stackPush()){
+			// Create ByteBuffers to get data.
+			IntBuffer x = stack.mallocInt(1);
+			IntBuffer y = stack.mallocInt(1);
+			IntBuffer channels = stack.mallocInt(1);
+			
+			// Get the texture data.
+			texture = STBImage.stbi_load(fileName, x, y, channels, 4);
+			
+			if(texture == null)
+				System.out.println(STBImage.stbi_failure_reason());
+			
+			width = x.get();
+			height = y.get();
+			numberOfChannels = channels.get();
+			
+			System.out.println("Channels: " + numberOfChannels);
+		}
 	}
 	
 	public void freeImage() {

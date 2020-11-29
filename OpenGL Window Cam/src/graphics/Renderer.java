@@ -1,4 +1,4 @@
-package window;
+package graphics;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ class Renderer {
 	
 	// Constants.
 	private static final int MAX_TRIANGLES = 10;
-	private static final String FILE_NAME = "src/res/bricks_texture.png";
+	private static final String FILE_NAME = "src/resources/bricks_texture.png";
 	
 	// Texture.
 	private Texture texture;
@@ -35,17 +35,22 @@ class Renderer {
 	// Vertex Shader code.
 	private CharSequence vertexShaderCode = 
 			"#version 430\n" + 
-			"in vec3 point;" + 
+			"layout (location = 0) in vec3 point;" + 
+			"layout (location = 1) in vec2 texPointIn;" + 
+			"out vec2 texPoint;" + 
 			"void main() {" + 
 			"    gl_Position = vec4(point, 1.0);" + 
+			"    texPoint = texPointIn;" +
 			"}";
 	
 	// Fragment Shader code.
 	private CharSequence fragmentShaderCode = 
 			"#version 430\n" + 
-			"out vec4 frag_color;" + 
+			"in vec2 texPoint;" +
+			"out vec4 fragColor;" + 
+			"uniform sampler2D samplerTexture;" +
 			"void main() {" + 
-			"    frag_color = vec4(1.0, 0.0, 0.0, 1.0);" + 
+			"    fragColor = texture(samplerTexture, texPoint);" + 
 			"}";
 	
 	Renderer(){
@@ -84,6 +89,7 @@ class Renderer {
 		vs = compileShader(GL43.GL_VERTEX_SHADER, vertexShaderCode);
 		fs = compileShader(GL43.GL_FRAGMENT_SHADER, fragmentShaderCode);
 		linkProgram();
+		bindAttributes();
 	}
 	
 	/**
@@ -124,6 +130,11 @@ class Renderer {
 		// Link the shaders together into single program.
 		GL43.glLinkProgram(sp);
 	}
+	
+	private void bindAttributes() {
+		GL43.glBindAttribLocation(sp, 0, "point");
+		GL43.glBindAttribLocation(sp, 1, "texPointIn");
+	}
 
 	/**
 	 * Updates what is rendered in the window. This would be taken care of by 
@@ -145,13 +156,23 @@ class Renderer {
 	 * the arrays in the vertex array.
 	 */
 	void draw() {
-		// Clear the window.
-		GL43.glClear(GL43.GL_COLOR_BUFFER_BIT | GL43.GL_DEPTH_BUFFER_BIT);
+		// Set the buffer color bit.
+		GL43.glClearColor(1, 0, 0, 1);
+		
+		// Clear the window with the color.
+		GL43.glClear(GL43.GL_COLOR_BUFFER_BIT);
+		
+		
 		
 		GL43.glUseProgram(sp);
 		
 		for(Triangle triangle : triangles) {
+			GL43.glBindTexture(GL43.GL_TEXTURE_2D, triangle.getTexture());
+			
 			GL43.glBindVertexArray(triangle.getVao());
+			
+			GL43.glEnableVertexAttribArray(0);
+			GL43.glEnableVertexAttribArray(1);
 			
 			GL43.glDrawArrays(GL43.GL_TRIANGLES, 0, 3);
 			

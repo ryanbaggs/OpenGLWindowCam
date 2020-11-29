@@ -1,4 +1,4 @@
-package window;
+package graphics;
 
 /**
  * Thrown to indicate that </code>GLFW</code> window or window context was 

@@ -1,4 +1,4 @@
-package window;
+package graphics;
 
 /**
  * Thrown to indicate that </code>GLFW</code> was not initialized 

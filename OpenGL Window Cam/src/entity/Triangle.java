@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL43;
 
 /**
  * Represents a Triangle entity that has coordinates and can move.
- *  
+ * <p>
  * @author Ryan Baggs
  * @date Created on 11-Nov-2020
  */
@@ -24,9 +24,9 @@ public class Triangle {
 	// The vertices of the triangle.
 	private float[] pointData = {
 	     // Positions	       // Texture coords
-		 0.0f,  0.5f,  0.0f,   0.0f, 0.0f,  // lower-left corner 
+		 0.0f,  0.5f,  0.0f,   0.5f, 1.0f,   // top-center corner 
 		 0.5f, -0.5f,  0.0f,   1.0f, 0.0f,  // lower-right corner
-		-0.5f, -0.5f,  0.0f,   0.5f, 1.0f   // top-center corner
+		-0.5f, -0.5f,  0.0f,   0.0f, 0.0f  // lower-left corner
 	};
 	
 	private Texture textureData;
@@ -74,12 +74,18 @@ public class Triangle {
 		// Bind the texture.
 		GL43.glBindTexture(GL43.GL_TEXTURE_2D, texture);
 		
+		GL43.glTexParameteri(GL43.GL_TEXTURE_2D, GL43.GL_TEXTURE_WRAP_S, GL43.GL_REPEAT);	
+		GL43.glTexParameteri(GL43.GL_TEXTURE_2D, GL43.GL_TEXTURE_WRAP_T, GL43.GL_REPEAT);
+		GL43.glTexParameteri(GL43.GL_TEXTURE_2D, GL43.GL_TEXTURE_MIN_FILTER, GL43.GL_NEAREST);
+		GL43.glTexParameteri(GL43.GL_TEXTURE_2D, GL43.GL_TEXTURE_MAG_FILTER, GL43.GL_NEAREST);
+		
 		// Check that the data for the texture is not null.
 		if(textureData != null) {
-			GL43.glTexImage2D(GL43.GL_TEXTURE_2D, 0, GL43.GL_RGB, 
+			GL43.glTexImage2D(GL43.GL_TEXTURE_2D, 0, GL43.GL_RGBA, 
 					textureData.getWidth(), textureData.getHeight(), 0, 
-					GL43.GL_RGB, GL43.GL_UNSIGNED_BYTE, 
+					GL43.GL_RGBA, GL43.GL_UNSIGNED_BYTE, 
 					textureData.getTexture());
+			GL43.glGenerateMipmap(GL43.GL_TEXTURE_2D);
 		} else {
 			System.err.println("Failed to load texture.");
 		}
@@ -120,6 +126,9 @@ public class Triangle {
 		
 		// Enable the second attribute array in the VAO for use.
 		GL43.glEnableVertexAttribArray(1);
+		
+		// Inform OpenGL what is the active texture.
+		GL43.glActiveTexture(GL43.GL_TEXTURE0);
 		
 		// Bind the texture.
 		GL43.glBindTexture(GL43.GL_TEXTURE_2D, texture);
@@ -250,7 +259,9 @@ public class Triangle {
 	public void setMoveRight(boolean moveRight) {
 		this.moveRight = moveRight;
 	}
-	
-	
+
+	public int getTexture() {
+		return texture;
+	}
 	
 }
