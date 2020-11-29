@@ -2,6 +2,8 @@ package entity;
 
 import org.lwjgl.opengl.GL43;
 
+import graphics.Texture;
+
 /**
  * Represents a Triangle entity that has coordinates and can move.
  * <p>
@@ -84,7 +86,7 @@ public class Triangle {
 			GL43.glTexImage2D(GL43.GL_TEXTURE_2D, 0, GL43.GL_RGBA, 
 					textureData.getWidth(), textureData.getHeight(), 0, 
 					GL43.GL_RGBA, GL43.GL_UNSIGNED_BYTE, 
-					textureData.getTexture());
+					textureData.getTextureData());
 			GL43.glGenerateMipmap(GL43.GL_TEXTURE_2D);
 		} else {
 			System.err.println("Failed to load texture.");

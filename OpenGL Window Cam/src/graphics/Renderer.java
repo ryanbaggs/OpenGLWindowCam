@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL43;
 
-import entity.Texture;
 import entity.Triangle;
+import io.TextureLoader;
 
 /**
  * Used to render triangle to a window.
@@ -69,7 +69,8 @@ class Renderer {
 	}
 	
 	private void createTexture() {
-		texture = new Texture(FILE_NAME);
+		TextureLoader textureLoader = new TextureLoader();
+		texture = textureLoader.loadTexture(FILE_NAME);
 	}
 	
 	/**
@@ -137,10 +138,7 @@ class Renderer {
 	}
 
 	/**
-	 * Updates what is rendered in the window. This would be taken care of by 
-	 * another thread and class to do separate updates from the rendering. 
-	 * Adds a new Entity if the flag is set and there are not already max 
-	 * Triangles made.
+	 * Updates what is rendered in the window.
 	 */
 	void update(boolean addEntity) {
 		
