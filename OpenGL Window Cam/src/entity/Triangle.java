@@ -40,7 +40,7 @@ public class Triangle {
 	
 	private void createTriangle(){
 		createVBO();
-		createTexture();
+		// createTexture();
 		createVAO();
 		addDataToVAO();
 		unBind();
@@ -64,33 +64,6 @@ public class Triangle {
 		// Give the array the data and inform that the data will be set many 
 		// times and will change often.
 		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, pointData, GL43.GL_DYNAMIC_DRAW);
-	}
-	
-	/**
-	 * Creates the texture vertex info.
-	 */
-	private void createTexture() {
-		// Get the name of the generated texture.
-		texture = GL43.glGenTextures();
-		
-		// Bind the texture.
-		GL43.glBindTexture(GL43.GL_TEXTURE_2D, texture);
-		
-		GL43.glTexParameteri(GL43.GL_TEXTURE_2D, GL43.GL_TEXTURE_WRAP_S, GL43.GL_REPEAT);	
-		GL43.glTexParameteri(GL43.GL_TEXTURE_2D, GL43.GL_TEXTURE_WRAP_T, GL43.GL_REPEAT);
-		GL43.glTexParameteri(GL43.GL_TEXTURE_2D, GL43.GL_TEXTURE_MIN_FILTER, GL43.GL_NEAREST);
-		GL43.glTexParameteri(GL43.GL_TEXTURE_2D, GL43.GL_TEXTURE_MAG_FILTER, GL43.GL_NEAREST);
-		
-		// Check that the data for the texture is not null.
-		if(textureData != null) {
-			GL43.glTexImage2D(GL43.GL_TEXTURE_2D, 0, GL43.GL_RGBA, 
-					textureData.getWidth(), textureData.getHeight(), 0, 
-					GL43.GL_RGBA, GL43.GL_UNSIGNED_BYTE, 
-					textureData.getTextureData());
-			GL43.glGenerateMipmap(GL43.GL_TEXTURE_2D);
-		} else {
-			System.err.println("Failed to load texture.");
-		}
 	}
 	
 	/**
