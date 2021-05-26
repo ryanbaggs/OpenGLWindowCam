@@ -2,70 +2,25 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-sources.jar">
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-glfw.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-glfw-natives-windows.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-glfw-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-opengl.jar" sourcepath="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-opengl-javadoc.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-opengl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-glfw.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-glfw-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-glfw-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-opengl.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-opengl-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-opengl-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-assimp.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-assimp-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-assimp-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-bgfx.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-bgfx-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-bgfx-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-nanovg.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-nanovg-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-nanovg-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-nuklear.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-nuklear-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-nuklear-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-openal.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-opengl-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-opengl-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-par.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-par-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-par-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-stb.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-stb-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-stb-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-vulkan.jar" sourcepath="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-vulkan-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/LWJGL/lwjgl%203.2.3%20standard%20jars/lwjgl-vulkan-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-assimp-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-bgfx-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-glfw-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-nanovg-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-nuklear-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-openal-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-opengl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-par-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/LWJGL/lwjgl 3.2.3 standard jars/lwjgl-stb-natives-windows.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-opengl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-opengl-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-stb.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-stb-natives-windows.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/lwjgl-stb-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/steamworks4j-1.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/steamworks4j-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/steamworks4j-server-1.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosam/OneDrive/Documents/lwjgl3/steamworks4j-server-1.8.0-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,4 +1,4 @@
-package graphics;
+package graphics.shader;
 
 import org.lwjgl.opengl.GL43;
 
@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL43;
 abstract class Shader {
 	
 	// OpenGL ID for the Shader.
-	protected int shaderID;
+	private int shaderID;
 	
 	/**
 	 * Creates a new Shader of the specified type.
@@ -19,8 +19,10 @@ abstract class Shader {
 	 * @param shaderType one of OpenGL's shader types (Example: 
 	 * GL43.GL_VERTEX_SHADER).
 	 */
-	protected Shader(int shaderType) {
+	protected Shader(int shaderType, CharSequence sourceCode) {
 		create(shaderType);
+		setSource(sourceCode);
+		compile();
 	}
 	
 	/**
@@ -38,23 +40,19 @@ abstract class Shader {
 	 * 
 	 * @param sourceCode of the shader.
 	 */
-	public void setSource(CharSequence sourceCode) {
+	private void setSource(CharSequence sourceCode) {
 		GL43.glShaderSource(shaderID, sourceCode);
 	}
 	
 	/**
 	 * Compiles the source code.
 	 */
-	public void compile() {
+	private void compile() {
 		GL43.glCompileShader(shaderID);
 	}
 
-	public int getShaderID() {
+	protected int getShaderID() {
 		return shaderID;
-	}
-
-	public void setShaderID(int shaderID) {
-		this.shaderID = shaderID;
 	}
 
 }
