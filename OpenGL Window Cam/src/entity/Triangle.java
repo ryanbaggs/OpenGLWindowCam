@@ -40,7 +40,7 @@ public class Triangle {
 	
 	private void createTriangle(){
 		createVBO();
-		// createTexture();
+		createTexture();
 		createVAO();
 		addDataToVAO();
 		unBind();
@@ -65,6 +65,14 @@ public class Triangle {
 		// times and will change often.
 		GL43.glBufferData(GL43.GL_ARRAY_BUFFER, pointData, GL43.GL_DYNAMIC_DRAW);
 	}
+	
+	private void createTexture() {
+		textureData.bind();
+		textureData.setTextureParams();
+		textureData.setTextureImage();
+		texture = textureData.getTextureID();
+	}
+
 	
 	/**
 	 * Creates a new Vertex Array Object (VAO) and binds it.

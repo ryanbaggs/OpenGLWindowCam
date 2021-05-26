@@ -110,4 +110,8 @@ public class Texture {
 		return channels;
 	}
 
+	public int getTextureID() {
+		return textureID;
+	}
+
 }
